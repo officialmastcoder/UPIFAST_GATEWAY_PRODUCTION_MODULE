@@ -1,0 +1,32 @@
+{
+    "schema": "1.0",
+    "type": "whmcs-gateways",
+    "name": "upifast-gateway",
+    "license": "MIT",
+    "category": "gateway",
+    "description": {
+        "name": "UPIFAST Gateway",
+        "tagline": "Payment Gateway to Collect Payments",
+        "long": "This Module will Help you to collect Payments via upi account.",
+        "features": [
+            "Instant Payment",
+            "Realtime Response.."
+        ]
+    },
+    "logo": {
+        "filename": "logo.png"
+    },
+    "support": {
+        "homepage": "https:\/\/www.ahkwebsolutions.com\/", 
+        "learn_more": "https:\/\/www.ahkwebsolutions.com\/", 
+        "email": "admin@ahkwebsolutions.com", 
+        "support_url": "https:\/\/ahkwebsolutions.com\/",
+        "docs_url": "https:\/\/ahkwebsolutions.com\/"
+    },
+    "authors": [
+        {
+            "name": "AHK WEB SOLUTIONS",
+            "homepage": "https:\/\/www.ahkwebsolutions.com\/"
+        }
+    ]
+}
