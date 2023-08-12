@@ -48,35 +48,40 @@ if(isset($response['status']) &&  $response['status'] != NULL){
 	));
 	$result = curl_exec($curl);
 	curl_close($curl);
-        $apiResdata = json_decode($result,true);
-        
-        if($apiResdata['status']==1){
-        $resdata = json_decode($apiResdata['param_list'],true);
-        $orderid = $resdata['orderId'];
-            if($resdata['txnStatus']=="TXN_SUCCESS"){
-                	$txnid_arr  = explode('_',$resdata['orderId']);
-                	$txnid = $txnid_arr[0];
-                	$txnid  = checkCbInvoiceID($txnid,'upifast');
-                // 		echo "<pre>";
-                //         // print_r($paramList);
-                //         var_dump(checkCbInvoiceID($txnid,'upifast'));
-                //         // die;
-                // 	$status =$response['status'];
-                	$upifast_trans_id = $resdata['orderId'];
-                	$amount=$resdata['txnAmount'];
-                	checkCbTransID($upifast_trans_id);
-                	$gatewayresult = "success";
-        			addInvoicePayment($txnid, $upifast_trans_id, $amount,'0', $gatewaymodule);
-        			logTransaction($GATEWAY["name"], $resdata, $resdata['RESPMSG']);
-        				$filename=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
-        				$filename = str_replace("/modules/gateways/callback/upifast.php","/clientarea.php?action=invoices",$filename);
-                        header("Location: $filename");
-            }
-        }else{
-            $filename=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
-            $filename = str_replace("/modules/gateways/callback/upifast.php","/clientarea.php?action=invoices",$filename);
-            header("Location: $filename");
-        }
+	    if($result!=''){
+        	$apiResdata = json_decode($result,true);
+	        if($apiResdata['status']==1){
+	        $resdata = json_decode($apiResdata['param_list'],true);
+	        $orderid = $resdata['orderId'];
+	            if($resdata['txnStatus']=="TXN_SUCCESS"){
+	                	$txnid_arr  = explode('_',$resdata['orderId']);
+	                	$txnid = $txnid_arr[0];
+	                	$txnid  = checkCbInvoiceID($txnid,'upifast');
+	                // 		echo "<pre>";
+	                //         // print_r($paramList);
+	                //         var_dump(checkCbInvoiceID($txnid,'upifast'));
+	                //         // die;
+	                // 	$status =$response['status'];
+	                	$upifast_trans_id = $resdata['orderId'];
+	                	$amount=$resdata['txnAmount'];
+	                	checkCbTransID($upifast_trans_id);
+	                	$gatewayresult = "success";
+	        			addInvoicePayment($txnid, $upifast_trans_id, $amount,'0', $gatewaymodule);
+	        			logTransaction($GATEWAY["name"], $resdata, $resdata['RESPMSG']);
+	        				$filename=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+	        				$filename = str_replace("/modules/gateways/callback/upifast.php","/clientarea.php?action=invoices",$filename);
+	                        header("Location: $filename");
+	            }
+	        }else{
+	            $filename=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+	            $filename = str_replace("/modules/gateways/callback/upifast.php","/clientarea.php?action=invoices",$filename);
+	            header("Location: $filename");
+	        }
+	}else{
+	    $filename=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+	    $filename = str_replace("/modules/gateways/callback/upifast.php","/clientarea.php?action=invoices",$filename);
+	    header("Location: $filename");
+	}
     }else{
         $filename=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
             $filename = str_replace("/modules/gateways/callback/upifast.php","/clientarea.php?action=invoices",$filename);
