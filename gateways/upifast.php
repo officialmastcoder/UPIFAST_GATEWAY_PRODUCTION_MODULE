@@ -65,10 +65,22 @@ function upifast_link($params) {
     $paramList["cust_Mobile"] = $phone;
     $paramList["callback_url"] = $callBackLink;
     $paramList["upifast_secret"]= $upifast_secret;
-        
-    $url  ="https://apizone.in/api/v6/generateChecksum.php?param_list=".urlencode(json_encode($paramList));
-    $result = file_get_contents($url);
-    $resData = json_decode($result,true);
+	
+	$url  ="https://apizone.in/api/v6/generateChecksum.php?param_list=".urlencode(json_encode($paramList));
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	    CURLOPT_URL => $url,
+	    CURLOPT_RETURNTRANSFER => true,
+	    CURLOPT_ENCODING => "",
+	    CURLOPT_MAXREDIRS => 10,
+	    CURLOPT_TIMEOUT => 0,
+	    CURLOPT_FOLLOWLOCATION => true,
+	    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	    CURLOPT_CUSTOMREQUEST => "GET",
+	));
+	$result = curl_exec($curl);
+	curl_close($curl);
+    	$resData = json_decode($result,true);
     
     if($resData['status']==1){
         $checkSum = $resData['checksum'];
