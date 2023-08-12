@@ -80,22 +80,28 @@ function upifast_link($params) {
 	));
 	$result = curl_exec($curl);
 	curl_close($curl);
-    	$resData = json_decode($result,true);
-    
-    if($resData['status']==1){
-        $checkSum = $resData['checksum'];
-    	$code='<form method="post" name="f1" action='. $upifast_txn_url .'>';
-    	foreach ($paramList as $key => $value) {
-    		$code.='<input type="hidden" name="'.$key.'" value="'.$value. '"/>';
-    	}
-    	$code.='<input type="hidden" name="checksum" value="'. $checkSum . '"/><input type="submit" value="Pay with UPIFAST" /></form><script type="text/javascript">
-        			document.f1.submit();
-        		</script>';
-    	return $code;
-    }else{
-        $messageE = $resData['message'];
-        $message = "<b style='color:red;'>".$messageE."</b>";
-        return $message;
-    }
+	if($result!=''){
+	    $resData = json_decode($result,true);
+	    if($resData['status']==1){
+		$checkSum = $resData['checksum'];
+		$code='<form method="post" name="f1" action='. $upifast_txn_url .'>';
+		foreach ($paramList as $key => $value) {
+			$code.='<input type="hidden" name="'.$key.'" value="'.$value. '"/>';
+		}
+		$code.='<input type="hidden" name="checksum" value="'. $checkSum . '"/><input type="submit" value="Pay with UPIFAST" /></form><script type="text/javascript">
+					document.f1.submit();
+				</script>';
+		return $code;
+	    }else{
+		$messageE = $resData['message'];
+		$message = "<b style='color:red;'>".$messageE."</b>";
+		return $message;
+	    }
+	}else{
+	  $messageE = "UPIFAST MODULE API ERROR! Contact With Module Provider";
+	  $message = "<b style='color:red;'>".$messageE."</b>";
+	  return $message;
+	}
+    	
 }
 ?>
