@@ -40,7 +40,7 @@ if(isset($_GET['results']) && $_GET['results']!=NULL){
     <title>We Are Processing your Order</title>
     </head>
     <body>
-    	<center><h1 style="color:red;">Your Order id Being Process Please Wait...</h1></center>
+    	<center><h1 style="color:red;">Your Transaction is Being Process Please Wait...</h1></center>
     	<center><h5 style="color:green;">After Complete the Process you will be redirected to ClientArea...</h5></center>
     		<form method="post" action="upifast.php" name="f1">
     		<table border="1">
