@@ -13,8 +13,6 @@ require_once __DIR__ . '/../../../init.php';
 require_once __DIR__ . '/../../../includes/gatewayfunctions.php';
 require_once __DIR__ . '/../../../includes/invoicefunctions.php';
 
-    // var_dump(logTransaction($GATEWAY["name"], $response, "Checksum Mismatch"));
-    // exit();
 $response = array();
 $response = $_POST;
 $gatewaymodule = "upifast"; 
@@ -23,7 +21,6 @@ $GATEWAY = getGatewayVariables($gatewaymodule);
 if (!$GATEWAY['type']) {
     die("UPIFAST Module Not Activated");
 }
-
 
 if(isset($response['status']) &&  $response['status'] != NULL){
     $array = array();
@@ -57,11 +54,6 @@ if(isset($response['status']) &&  $response['status'] != NULL){
 	                	$txnid_arr  = explode('_',$resdata['orderId']);
 	                	$txnid = $txnid_arr[0];
 	                	$txnid  = checkCbInvoiceID($txnid,'upifast');
-	                // 		echo "<pre>";
-	                //         // print_r($paramList);
-	                //         var_dump(checkCbInvoiceID($txnid,'upifast'));
-	                //         // die;
-	                // 	$status =$response['status'];
 	                	$upifast_trans_id = $resdata['orderId'];
 	                	$amount=$resdata['txnAmount'];
 	                	checkCbTransID($upifast_trans_id);
